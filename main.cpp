@@ -3,7 +3,7 @@
 #include <iostream>
 
 int main() {
-    const int num_spaghettis = 1;
+    const int num_spaghettis = 15;
     Bowl bowl(num_spaghettis);
 
     bool cycle = bowl.simulate();

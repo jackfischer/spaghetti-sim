@@ -1,5 +1,7 @@
 #include <algorithm>
+#include <ctime>
 #include <iostream>
+#include <random>
 #include <vector>
 
 class Spaghetti {
@@ -48,8 +50,11 @@ class Bowl {
 
         bool simulate() {
             //Randomize end vector
-            std::random_shuffle(ends.begin(), ends.end());
-
+            //std::cout << time(0) <<std::endl;
+            //std::mt19937 generator(static_cast<uint32_t>(time(0)));
+            std::mt19937 generator(1485906924);
+            std::shuffle(ends.begin(), ends.end(), generator);
+            
             //Perform connections
             for (size_t i = 0; i < ends.size(); i+=2) {
                 int a = ends[i];
@@ -58,9 +63,15 @@ class Bowl {
                 join_ends(b, a); //TODO only perform for outgoing (lower) spaghetti link
             }
 
+
+
+            std::cout << "about to test cycle"<< std::endl;
+            to_string();
+
             //Test cycle
             int spaghetti = 0;
-            for (size_t _ = 0; _ < bowl.size(); _++) {
+            while (true) {
+                std::cout <<"testing " <<spaghetti << std::endl;
                 if (bowl[spaghetti].seen == true)
                     return false;
                 else

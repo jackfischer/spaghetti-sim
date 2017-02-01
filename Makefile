@@ -1,5 +1,5 @@
 CXX       := g++
-CXXFLAGS  := -std=c++14 -Wall -Wextra -pedantic -O0
+CXXFLAGS  := -std=c++14 -g -Wall -Wextra -pedantic -O0
 
 
 #spaghetti: spaghetti.o
@@ -9,8 +9,8 @@ CXXFLAGS  := -std=c++14 -Wall -Wextra -pedantic -O0
 #	$(CXX) $(CXXFLAGS) -c $@ $^
 
 
-all: main spaghetti 
-	$(CXX) $(CXXFLAGS) *.o -o main
+all:
+	$(CXX) $(CXXFLAGS) main.cpp -o main
 
 
 
