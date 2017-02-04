@@ -1,5 +1,4 @@
 #include <algorithm>
-#include <ctime>
 #include <iostream>
 #include <random>
 #include <vector>
@@ -9,15 +8,16 @@ class Spaghetti {
         int left;
         int right;
         bool seen;
-
-        Spaghetti() : left(-1), right(-1) { }
-
+        Spaghetti() : left(-1), right(-1), seen(false) { }
 };
 
 
 class Bowl {
 
     private:
+        std::vector<Spaghetti> bowl;
+        std::vector<int> ends;
+
         void join_ends(int a, int b) {
             int spaghetti = a / 2;
             int offset = a % 2;
@@ -27,34 +27,15 @@ class Bowl {
 
 
     public:
-        std::vector<Spaghetti> bowl;
-        std::vector<int> ends;
-
-        Bowl(int n) : bowl(n) , ends(2*n) {
+        Bowl(int n) : bowl(n), ends(2*n) {
             for (int i = 0; i < 2*n; i++)
                 ends[i] = i;
         }
 
-        void to_string() {
-            for (Spaghetti s : bowl) {
-                std::cout << " " << s.left << " " << s.right <<std::endl;
-            }
-        }
-
-        void print_ends() {
-            for (int i : ends)
-                std::cout << i << " ";
-            std::cout << std::endl;
-        }
-
-
-        bool simulate() {
+        bool simulate(std::mt19937 & generator) {
             //Randomize end vector
-            //std::cout << time(0) <<std::endl;
-            //std::mt19937 generator(static_cast<uint32_t>(time(0)));
-            std::mt19937 generator(1485906924);
             std::shuffle(ends.begin(), ends.end(), generator);
-            
+
             //Perform connections
             for (size_t i = 0; i < ends.size(); i+=2) {
                 int a = ends[i];
@@ -63,25 +44,28 @@ class Bowl {
                 join_ends(b, a); //TODO only perform for outgoing (lower) spaghetti link
             }
 
-
-
-            std::cout << "about to test cycle"<< std::endl;
-            to_string();
-
             //Test cycle
-            int spaghetti = 0;
-            while (true) {
-                std::cout <<"testing " <<spaghetti << std::endl;
-                if (bowl[spaghetti].seen == true)
+            int end_i = 0;
+            for (size_t count = 0; count < bowl.size(); count++) {
+                Spaghetti & s = bowl[end_i / 2];
+                if (s.seen == true)
                     return false;
-                else
-                    bowl[spaghetti].seen = true;
-                spaghetti = bowl[spaghetti].right;
+                s.seen = true;
+                end_i = s.right;
             }
-            
             return true;
         }
 
+        void print_bowl() {
+            for (Spaghetti s : bowl)
+                std::cout << " " << s.left << " " << s.right << std::endl;
+        }
+
+        void print_ends() {
+            for (int i : ends)
+                std::cout << i << " ";
+            std::cout << std::endl;
+        }
 
 };
 
