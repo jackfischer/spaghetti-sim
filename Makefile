@@ -1,5 +1,5 @@
 CXX       := g++
-CXXFLAGS  := -std=c++14 -g -Wall -Wextra -pedantic -O0
+CXXFLAGS  := -std=c++14 -g -Wall -Wextra -pedantic -O2
 
 
 #spaghetti: spaghetti.o

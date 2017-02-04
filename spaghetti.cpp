@@ -19,8 +19,8 @@ class Bowl {
         std::vector<int> ends;
 
         void join_ends(int a, int b) {
-            int spaghetti = a / 2;
-            int offset = a % 2;
+            const int spaghetti = a / 2;
+            const int offset = a % 2;
             int& end = (offset == 0) ? bowl[spaghetti].left : bowl[spaghetti].right;
             end = b;
         }
@@ -32,14 +32,14 @@ class Bowl {
                 ends[i] = i;
         }
 
-        bool simulate(std::mt19937 & generator) {
+        bool simulate(const std::mt19937 & generator) {
             //Randomize end vector
             std::shuffle(ends.begin(), ends.end(), generator);
 
             //Perform connections
             for (size_t i = 0; i < ends.size(); i+=2) {
-                int a = ends[i];
-                int b = ends[i+1];
+                const int a = ends[i];
+                const int b = ends[i+1];
                 join_ends(a, b);
                 join_ends(b, a); //TODO only perform for outgoing (lower) spaghetti link
             }
@@ -54,6 +54,14 @@ class Bowl {
                 end_i = s.right;
             }
             return true;
+        }
+
+        void reset() {
+            for (Spaghetti s : bowl) {
+                s.seen = false;
+                s.left = -1; //TODO remove
+                s.right = -1;
+            }
         }
 
         void print_bowl() {
