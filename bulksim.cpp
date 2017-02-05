@@ -7,23 +7,22 @@ class BulkSim {
     private:
         Bowl bowl;
         const int trials;
-        const std::mt19937 generator;
+        std::mt19937 generator;
 
 
     public:
         BulkSim(int bowlsize, int trials) :
-            bowl(bowlsize), trials(trials), 
+            bowl(bowlsize), trials(trials),
             generator(static_cast<uint32_t>(time(0))) { }
 
         float run_trials() {
             int successes = 0;
-            for (int i = 0; i < trials; i++) {
+            for (int trial = 0; trial < trials; trial++) {
                 if (bowl.simulate(generator))
                     successes++;
                 bowl.reset();
             }
 
-            std::cout << "num success " << successes <<std::endl;
             return (float) successes / (float) trials;
         }
 

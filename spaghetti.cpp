@@ -32,7 +32,7 @@ class Bowl {
                 ends[i] = i;
         }
 
-        bool simulate(const std::mt19937 & generator) {
+        bool simulate(std::mt19937 & generator) {
             //Randomize end vector
             std::shuffle(ends.begin(), ends.end(), generator);
 
@@ -57,19 +57,19 @@ class Bowl {
         }
 
         void reset() {
-            for (Spaghetti s : bowl) {
+            for (Spaghetti & s : bowl) {
                 s.seen = false;
                 s.left = -1; //TODO remove
                 s.right = -1;
             }
         }
 
-        void print_bowl() {
+        void print_bowl() const {
             for (Spaghetti s : bowl)
                 std::cout << " " << s.left << " " << s.right << std::endl;
         }
 
-        void print_ends() {
+        void print_ends() const {
             for (int i : ends)
                 std::cout << i << " ";
             std::cout << std::endl;
