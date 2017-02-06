@@ -1,3 +1,6 @@
+#ifndef SPAGHETTI_H
+#define SPAGHETTI_H
+
 #include <algorithm>
 #include <iostream>
 #include <random>
@@ -41,7 +44,8 @@ class Bowl {
                 const int a = ends[i];
                 const int b = ends[i+1];
                 join_ends(a, b);
-                join_ends(b, a); //TODO only perform for outgoing (lower) spaghetti link
+                join_ends(b, a);
+                //TODO only perform for outgoing (lower) spaghetti link
             }
 
             //Test cycle
@@ -57,11 +61,8 @@ class Bowl {
         }
 
         void reset() {
-            for (Spaghetti & s : bowl) {
+            for (Spaghetti & s : bowl)
                 s.seen = false;
-                s.left = -1; //TODO remove
-                s.right = -1;
-            }
         }
 
         void print_bowl() const {
@@ -77,3 +78,4 @@ class Bowl {
 
 };
 
+#endif //SPAGHETTI_H

@@ -1,8 +1,9 @@
-#include "bulksim.cpp"
-#include "gnuplotadapter.cpp"
-
 #include <iostream>
 #include <vector>
+
+#include "bulksim.hpp"
+#include "gnuplotadapter.hpp"
+
 
 int main() {
 

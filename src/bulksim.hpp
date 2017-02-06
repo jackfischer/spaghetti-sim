@@ -1,7 +1,10 @@
-#include "spaghetti.cpp"
+#ifndef BULKSIM_H
+#define BULKSIM_H
 
 #include <ctime>
 #include <random>
+
+#include "spaghetti.hpp"
 
 class BulkSim {
     private:
@@ -28,3 +31,4 @@ class BulkSim {
 
 };
 
+#endif //BULKSIM_H

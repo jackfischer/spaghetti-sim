@@ -1,8 +1,8 @@
-#include <cstdio>
-#include <string>
-#include <vector>
+#ifndef GNUPLOTADAPTER_H
+#define GNUPLOTADAPTER_H
 
-#include <iostream>
+#include <cstdio>
+#include <vector>
 
 class GnuPlotAdapter {
 
@@ -12,20 +12,22 @@ class GnuPlotAdapter {
     public:
         GnuPlotAdapter() : gnuplotpipe(popen("gnuplot", "w")) {
             std::vector<const char *> setup = {
-                "set term dumb 79 25",
+                "set term dumb 79 31",
                 "set title 'p(single loop) vs n'",
+                //"set xlabel 'n'",
+                //"set ylabel 'p(loop)'"
             };
             for (const char * cmd : setup)
                 fprintf(gnuplotpipe, "%s\n", cmd);
-            //fflush(gnuplotpipe);
+            fflush(gnuplotpipe);
         }
 
         void plot(std::vector<float> & data) {
             fprintf(gnuplotpipe, "plot '-' pt '#' \n");
             for (size_t x = 0; x < data.size(); x++)
-                fprintf(gnuplotpipe, "%lu %f\n", x, data[x]);
+                fprintf(gnuplotpipe, "%lu %f\n", x + 1, data[x]);
             fprintf(gnuplotpipe, "e\n");
-            //fflush(gnuplotpipe);
+            fflush(gnuplotpipe);
         }
 
         ~GnuPlotAdapter() {
@@ -33,4 +35,4 @@ class GnuPlotAdapter {
         }
 };
 
-
+#endif //GNUPLOT_ADAPTER
