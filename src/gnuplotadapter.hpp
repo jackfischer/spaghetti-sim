@@ -2,6 +2,7 @@
 #define GNUPLOTADAPTER_H
 
 #include <cstdio>
+//#include <memory> //unique_ptr
 #include <vector>
 
 class GnuPlotAdapter {
@@ -12,11 +13,11 @@ class GnuPlotAdapter {
     public:
         GnuPlotAdapter() : gnuplotpipe(popen("gnuplot", "w")) {
             std::vector<const char *> setup = {
-                "set term dumb 79 31",
+                "set term dumb 79 29",
                 "set title 'p(single loop) vs n'",
                 //"set xlabel 'n'",
                 //"set ylabel 'p(loop)'"
-            };
+            }; //TODO leak
             for (const char * cmd : setup)
                 fprintf(gnuplotpipe, "%s\n", cmd);
             fflush(gnuplotpipe);
@@ -26,7 +27,7 @@ class GnuPlotAdapter {
             fprintf(gnuplotpipe, "plot '-' pt '#' \n");
             for (size_t x = 0; x < data.size(); x++)
                 fprintf(gnuplotpipe, "%lu %f\n", x + 1, data[x]);
-            fprintf(gnuplotpipe, "e\n");
+            fprintf(gnuplotpipe, "e\n"); //end points input
             fflush(gnuplotpipe);
         }
 

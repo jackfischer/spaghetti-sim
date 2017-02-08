@@ -15,5 +15,5 @@ all:
 
 
 .PHONY clean:
-	rm -rf *.o main
+	rm -rf *.o main *.dSYM
 

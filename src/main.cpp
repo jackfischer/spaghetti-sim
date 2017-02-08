@@ -7,8 +7,9 @@
 
 int main() {
 
-    const int maxbowlsize = 13;
-    const int numtrials = 10000;
+    const int maxbowlsize = 50;
+    const int numtrials = 10000; //TODO profile
+
 
     std::vector<float> results;
 

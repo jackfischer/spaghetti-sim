@@ -55,7 +55,7 @@ class Bowl {
                 if (s.seen == true)
                     return false;
                 s.seen = true;
-                end_i = s.right;
+                end_i = (end_i % 2 == 0) ? s.right : s.left;
             }
             return true;
         }
