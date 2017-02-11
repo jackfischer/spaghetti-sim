@@ -1,5 +1,5 @@
 CXX       := g++
-CXXFLAGS  := -std=c++14 -g -Wall -Wextra -pedantic -O2
+CXXFLAGS  := -std=c++14 -g -Wall -Wextra -pedantic -O3
 
 
 #spaghetti: spaghetti.o
@@ -12,8 +12,10 @@ CXXFLAGS  := -std=c++14 -g -Wall -Wextra -pedantic -O2
 all:
 	$(CXX) $(CXXFLAGS) main.cpp -o main
 
+testclient:
+	$(CXX) $(CXXFLAGS) testclient.cpp -o test
 
 
 .PHONY clean:
-	rm -rf *.o main *.dSYM
+	rm -rf *.o main *.dSYM a.out test
 

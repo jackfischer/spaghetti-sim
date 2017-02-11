@@ -20,6 +20,7 @@ class Bowl {
     private:
         std::vector<Spaghetti> bowl;
         std::vector<int> ends;
+        int unseen_spaghetti;
 
         void join_ends(int a, int b) {
             const int spaghetti = a / 2;
@@ -28,14 +29,20 @@ class Bowl {
             end = b;
         }
 
+        void find_unseen() {
+            //while (unseen_spaghetti < bowl.size())
+            while (!bowl[unseen_spaghetti].seen)
+                unseen_spaghetti++;
+        }
+
 
     public:
-        Bowl(int n) : bowl(n), ends(2*n) {
+        Bowl(int n) : bowl(n), ends(2*n), unseen_spaghetti(0) {
             for (int i = 0; i < 2*n; i++)
                 ends[i] = i;
         }
 
-        bool simulate(std::default_random_engine & generator) {
+        int simulate(std::default_random_engine & generator) {
             //Randomize end vector
             std::shuffle(ends.begin(), ends.end(), generator);
 
@@ -48,16 +55,27 @@ class Bowl {
                 //TODO only perform for outgoing (lower) spaghetti link
             }
 
-            //Test cycle
-            int end_i = 0;
-            for (size_t count = 0; count < bowl.size(); count++) {
-                Spaghetti & s = bowl[end_i / 2];
-                if (s.seen == true)
-                    return false;
-                s.seen = true;
-                end_i = (end_i % 2 == 0) ? s.right : s.left;
+            //Count loops
+            int current_end = 0;
+            int loops = 1;
+            bool legacy_seen = true;
+            for (size_t count = 0; count < bowl.size() + 1; count++) {
+                Spaghetti & s = bowl[current_end / 2];
+                if (s.seen == true) { //End of a loop
+                    legacy_seen = false;
+                    loops++;
+                    find_unseen();
+                    current_end = 2 * unseen_spaghetti;
+                } else { //Middle of a loop
+                    s.seen = true;
+                    current_end = (current_end % 2 == 0) ? s.right : s.left;
+                }
             }
-            return true;
+            //std::cout << "loops: " << loops << std::endl;
+            return loops;
+            //return (loops == 1);
+            //std::cout << "legacy seen: " << legacy_seen << " loops: " << loops << std::endl;
+            //return (legacy_seen == (loops == 1));
         }
 
         void reset() {

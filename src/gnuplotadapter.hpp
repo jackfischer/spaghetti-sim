@@ -2,7 +2,6 @@
 #define GNUPLOTADAPTER_H
 
 #include <cstdio>
-//#include <memory> //unique_ptr
 #include <vector>
 
 class GnuPlotAdapter {

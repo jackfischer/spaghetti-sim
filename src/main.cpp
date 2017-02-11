@@ -14,9 +14,10 @@ int main() {
 
     for (int bowlsize = 1; bowlsize <= maxbowlsize; bowlsize++) {
         BulkSim bulk(bowlsize, numtrials);
-        auto rate = bulk.run_trials();
-        std::cout << bowlsize << " " << rate << std::endl;
-        results.push_back(rate);
+        bulk.run_trials();
+        int loops = bulk.total_loops / numtrials; //div by bowlsize gives power?!?!?
+        std::cout << "spaghettis: " << bowlsize << " avg loops: " << loops << std::endl;
+        results.push_back(loops);
     }
 
     GnuPlotAdapter gnuplot;
