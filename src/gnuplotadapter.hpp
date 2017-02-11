@@ -17,7 +17,7 @@ class GnuPlotAdapter {
                 "set title 'p(single loop) vs n'",
                 //"set xlabel 'n'",
                 //"set ylabel 'p(loop)'"
-            }; //TODO leak
+            };
             for (const char * cmd : setup)
                 fprintf(gnuplotpipe, "%s\n", cmd);
             fflush(gnuplotpipe);

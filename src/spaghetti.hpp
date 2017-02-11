@@ -35,7 +35,7 @@ class Bowl {
                 ends[i] = i;
         }
 
-        bool simulate(std::mt19937 & generator) {
+        bool simulate(std::default_random_engine & generator) {
             //Randomize end vector
             std::shuffle(ends.begin(), ends.end(), generator);
 

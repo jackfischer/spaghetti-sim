@@ -10,7 +10,7 @@ class BulkSim {
     private:
         Bowl bowl;
         const int trials;
-        std::mt19937 generator;
+        std::default_random_engine generator;
 
 
     public:
