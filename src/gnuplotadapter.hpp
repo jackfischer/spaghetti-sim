@@ -11,28 +11,28 @@ class GnuPlotAdapter {
 
     public:
         GnuPlotAdapter() : gnuplotpipe(popen("gnuplot", "w")) {
-            std::vector<const char *> setup = {
-                "set term dumb 79 29",
-                "set title 'p(single loop) vs n'",
-                //"set xlabel 'n'",
-                //"set ylabel 'p(loop)'"
-            };
-            for (const char * cmd : setup)
-                fprintf(gnuplotpipe, "%s\n", cmd);
-            fflush(gnuplotpipe);
+            fprintf(gnuplotpipe, "set term dumb 79 29\n");
         }
 
-        void plot(std::vector<float> & data) {
+        void set_title(const char * title) {
+            fprintf(gnuplotpipe, "set title '%s'\n", title);
+        }
+
+        void set_data(std::vector<float> & data) {
             fprintf(gnuplotpipe, "plot '-' pt '#' \n");
             for (size_t x = 0; x < data.size(); x++)
                 fprintf(gnuplotpipe, "%lu %f\n", x + 1, data[x]);
-            fprintf(gnuplotpipe, "e\n"); //end points input
+            fprintf(gnuplotpipe, "e\n"); //declare end of data input
+        }
+
+        void plot() {
             fflush(gnuplotpipe);
         }
 
         ~GnuPlotAdapter() {
             pclose(gnuplotpipe);
         }
+
 };
 
 #endif //GNUPLOT_ADAPTER

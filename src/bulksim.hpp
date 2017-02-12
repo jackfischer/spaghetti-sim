@@ -26,8 +26,9 @@ class BulkSim {
             for (int trial = 0; trial < trials; trial++) {
                 int loops = bowl.simulate(generator);
                 total_loops += loops;
-                if (loops == 0)
+                if (loops == 1) {
                     total_singles++;
+                }
                 bowl.reset();
             }
 

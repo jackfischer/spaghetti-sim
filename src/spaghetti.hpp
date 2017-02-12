@@ -30,7 +30,6 @@ class Bowl {
         }
 
         void find_unseen() {
-            //while (unseen_spaghetti < bowl.size())
             while (!bowl[unseen_spaghetti].seen)
                 unseen_spaghetti++;
         }
@@ -57,12 +56,12 @@ class Bowl {
 
             //Count loops
             int current_end = 0;
-            int loops = 1;
-            bool legacy_seen = true;
+            int loops = 0;
+            //bool legacy_seen = true;
             for (size_t count = 0; count < bowl.size() + 1; count++) {
                 Spaghetti & s = bowl[current_end / 2];
                 if (s.seen == true) { //End of a loop
-                    legacy_seen = false;
+                    //legacy_seen = false;
                     loops++;
                     find_unseen();
                     current_end = 2 * unseen_spaghetti;
@@ -71,7 +70,8 @@ class Bowl {
                     current_end = (current_end % 2 == 0) ? s.right : s.left;
                 }
             }
-            //std::cout << "loops: " << loops << std::endl;
+            //if (loops == 1)
+            //    std::cout << "DEBUG loops: " << loops << std::endl;
             return loops;
             //return (loops == 1);
             //std::cout << "legacy seen: " << legacy_seen << " loops: " << loops << std::endl;
