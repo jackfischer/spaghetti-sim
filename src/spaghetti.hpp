@@ -57,11 +57,9 @@ class Bowl {
             //Count loops
             int current_end = 0;
             int loops = 0;
-            //bool legacy_seen = true;
             for (size_t count = 0; count < bowl.size() + 1; count++) {
                 Spaghetti & s = bowl[current_end / 2];
                 if (s.seen == true) { //End of a loop
-                    //legacy_seen = false;
                     loops++;
                     find_unseen();
                     current_end = 2 * unseen_spaghetti;
