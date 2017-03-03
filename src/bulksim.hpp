@@ -31,8 +31,6 @@ class BulkSim {
                 }
                 bowl.reset();
             }
-
-            //return total_loops / trials;
         }
 
 };

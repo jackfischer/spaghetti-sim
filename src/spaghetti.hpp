@@ -42,10 +42,11 @@ class Bowl {
         }
 
         int simulate(std::default_random_engine & generator) {
-            //Randomize end vector
+            //Randomize ends vector, we'll use two at a time from the front
+            //to represent choosing ends w/o replacement
             std::shuffle(ends.begin(), ends.end(), generator);
 
-            //Perform connections
+            //Perform connections in bowl based on order of ends
             for (size_t i = 0; i < ends.size(); i+=2) {
                 const int a = ends[i];
                 const int b = ends[i+1];
@@ -54,12 +55,12 @@ class Bowl {
                 //TODO only perform for outgoing (lower) spaghetti link
             }
 
-            //Count loops
+            //Traverse bowl and count resulting loops
             int current_end = 0;
             int loops = 0;
             for (size_t count = 0; count < bowl.size() + 1; count++) {
                 Spaghetti & s = bowl[current_end / 2];
-                if (s.seen == true) { //End of a loop
+                if (s.seen == true) { //Discovered end of a loop
                     loops++;
                     find_unseen();
                     current_end = 2 * unseen_spaghetti;
@@ -68,12 +69,8 @@ class Bowl {
                     current_end = (current_end % 2 == 0) ? s.right : s.left;
                 }
             }
-            //if (loops == 1)
-            //    std::cout << "DEBUG loops: " << loops << std::endl;
+
             return loops;
-            //return (loops == 1);
-            //std::cout << "legacy seen: " << legacy_seen << " loops: " << loops << std::endl;
-            //return (legacy_seen == (loops == 1));
         }
 
         void reset() {

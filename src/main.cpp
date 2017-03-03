@@ -1,3 +1,4 @@
+#include <chrono>
 #include <iomanip>
 #include <iostream>
 #include <vector>
@@ -16,6 +17,10 @@ int main() {
     std::vector<float> psingleloops;
     psingleloops.reserve(maxbowlsize);
 
+    std::chrono::time_point<std::chrono::system_clock> start, end;
+    start = std::chrono::system_clock::now();
+
+    //Create and run a bulk simulation for each bowl size
     for (int bowlsize = 1; bowlsize <= maxbowlsize; bowlsize++) {
         BulkSim bulk(bowlsize, numtrials);
         std::cout << "n: " << bowlsize;
@@ -30,6 +35,10 @@ int main() {
         psingleloops.push_back(psingleloop);
         std::cout << "\tp(single): " << psingleloop << std::endl;
     }
+
+    end = std::chrono::system_clock::now();
+    std::chrono::duration<double> elapsed_seconds = end - start;
+    std::cout << "Time elapsed (s): " << elapsed_seconds.count() << std::endl;
 
     GnuPlotAdapter gnuplot;
     gnuplot.set_title("p(single loop) vs n");
